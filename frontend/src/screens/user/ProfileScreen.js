@@ -152,33 +152,64 @@ const ProfileScreen = ({ history }) => {
         }
     };
 
+    const fileValidation = (file) => {
+        console.log(file);
+        const image = file;
+        // Array of allowed files
+        //const array_of_allowed_files = ['png', 'jpeg', 'jpg', 'gif'];
+        const array_of_allowed_file_types = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+        // Allowed file size in mb
+        const allowed_file_size = 1;
+        var fileResult = '';
+        // Check if the uploaded file is allowed
+        if (!array_of_allowed_file_types.includes(image.type)) {
+            fileResult = 'Invalid file, Make sure your image type';
+        }
+    
+        if ((image.size / (1024 * 1024)) > allowed_file_size) {                  
+           fileResult = 'File too large, reduce its size';
+        }
+        return fileResult;
+    };
+        
     // upload file
     const uploadingFileHandler = async (e) => {
         //get first element from files which one is the image
         const file = e.target.files[0];
-        //form instance
-        const formData = new FormData();
-        //add file
-        formData.append("image", file);
-        //start loader
-        setUploading(true);
-        try {
-            //form config
-            const config = {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            };
-            //api call to upload image
-            const { data } = await axios.post("/api/upload", formData, config);
-            //set image path
-            setImage(data);
-            //stop loader
-            setUploading(false);
-        } catch (error) {
-            console.error(error);
-            setUploading(false);
+        //file validation
+        var validation = fileValidation(file);
+        if(!validation){
+            //form instance
+            const formData = new FormData();
+            //add file
+            formData.append("image", file);
+            //start loader
+            setUploading(true);
+            try {
+                //form config
+                const config = {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                };
+                //api call to upload image
+                const { data } = await axios.post("/api/upload", formData, config);
+                //set image path
+                setImage(data);
+                //stop loader
+                setUploading(false);
+            } catch (error) {
+                console.error(error);
+                setUploading(false);
+            }
         }
+        else{
+            //console.error(validation);
+            setUploading(false);
+            alert(validation);
+            
+        }
+        
     };
 
     const imageName = (image) => {
