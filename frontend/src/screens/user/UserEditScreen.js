@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-/* Components */
+/* Import Components */
 import HeaderContent from "../../components/HeaderContent";
 import Input from "../../components/form/Input";
 import Checkbox from "../../components/form/Checkbox";
