@@ -79,9 +79,9 @@ const DashboardScreen = ({ history }) => {
                     <td className="font-weight-bold">{sales[i].id}</td>
                     <td className="h4">
                         {sales[i].delivery ? (
-                            <span className={"badge bg-primary"}>IN PLACE</span>
+                            <span className={"badge bg-primary"}>DELIVERY</span>
                         ) : (
-                            <span className={"badge bg-info"}>DELIVERY</span>
+                            <span className={"badge bg-info"}>IN PLACE</span>
                         )}
                     </td>
                     <td className="h4">

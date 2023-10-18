@@ -24,7 +24,7 @@ const ClientEditScreen = ({ history, match }) => {
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [dni, setDni] = useState("");
+    const [memberid, setMemberID] = useState("");
 
     const [errors, setErrors] = useState({});
 
@@ -65,7 +65,7 @@ const ClientEditScreen = ({ history, match }) => {
                 setAddress(client.address);
                 setPhone(client.phone);
                 setEmail(client.email);
-                setDni(client.dni);
+                setMemberID(client.memberid);
             }
         }
     }, [dispatch, history, clientId, client, successUpdate]);
@@ -89,8 +89,8 @@ const ClientEditScreen = ({ history, match }) => {
             errorsCheck.email = "Email is required";
         }
 
-        if (!dni) {
-            errorsCheck.dni = "DNI is required";
+        if (!memberid) {
+            errorsCheck.memberid = "Member ID is required";
         }
 
         if (Object.keys(errorsCheck).length > 0) {
@@ -107,7 +107,7 @@ const ClientEditScreen = ({ history, match }) => {
                     address,
                     phone,
                     email,
-                    dni,
+                    memberid,
                 })
             );
         }
@@ -144,10 +144,10 @@ const ClientEditScreen = ({ history, match }) => {
                 errors={errors}
             />
             <Input
-                name={"DNI"}
+                name={"MemberID"}
                 type={"text"}
-                data={dni}
-                setData={setDni}
+                data={memberid}
+                setData={setMemberID}
                 errors={errors}
             />
 

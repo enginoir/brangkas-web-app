@@ -13,7 +13,7 @@ const client = {
     address: "Barrio Centro, Rivadavia 1030",
     phone: "3804123123",
     email: "johndoe@example.com",
-    dni: "40123123",
+    memberid: "40123123",
     createdAt: "2021-05-19T03:54:19.000Z",
     updatedAt: "2021-05-19T03:54:19.000Z",
 };

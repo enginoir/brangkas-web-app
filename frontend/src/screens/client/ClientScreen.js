@@ -29,7 +29,7 @@ const ClientScreen = ({ history }) => {
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [dni, setDni] = useState("");
+    const [memberid, setMemberID] = useState("");
 
     const [errors, setErrors] = useState({});
 
@@ -55,7 +55,7 @@ const ClientScreen = ({ history }) => {
             setAddress("");
             setPhone("");
             setEmail("");
-            setDni("");
+            setMemberID("");
             setModalIsOpen(false);
         }
     }, [dispatch, history, userInfo, pageNumber, keyword, createSuccess]);
@@ -79,8 +79,8 @@ const ClientScreen = ({ history }) => {
             errorsCheck.email = "Email is required";
         }
 
-        if (!dni) {
-            errorsCheck.dni = "DNI is required";
+        if (!memberid) {
+            errorsCheck.memberid = "Member ID is required";
         }
 
         if (Object.keys(errorsCheck).length > 0) {
@@ -95,7 +95,7 @@ const ClientScreen = ({ history }) => {
                 address: address,
                 phone: phone,
                 email: email,
-                dni: dni,
+                memberid: memberid,
             };
 
             dispatch(createClient(client));
@@ -146,10 +146,10 @@ const ClientScreen = ({ history }) => {
                         errors={errors}
                     />
                     <Input
-                        name={"dni"}
+                        name={"memberid"}
                         type={"text"}
-                        data={dni}
-                        setData={setDni}
+                        data={memberid}
+                        setData={setMemberID}
                         errors={errors}
                     />
                     <hr />
@@ -175,7 +175,7 @@ const ClientScreen = ({ history }) => {
                     <th className="d-none d-sm-table-cell">Address</th>
                     <th className="d-none d-sm-table-cell">Phone</th>
                     <th className="d-none d-sm-table-cell">Email</th>
-                    <th className="d-none d-sm-table-cell">DNI</th>
+                    <th className="d-none d-sm-table-cell">Member ID</th>
                     <th className="d-none d-sm-table-cell">Created At</th>
                     <th></th>
                 </tr>
@@ -194,7 +194,7 @@ const ClientScreen = ({ history }) => {
                         <td className="d-none d-sm-table-cell">
                             {client.email}
                         </td>
-                        <td className="d-none d-sm-table-cell">{client.dni}</td>
+                        <td className="d-none d-sm-table-cell">{client.memberid}</td>
                         <td className="d-none d-sm-table-cell">
                             {client.createdAt.slice(0, 10)}
                         </td>
