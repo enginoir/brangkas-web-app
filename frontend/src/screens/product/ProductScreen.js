@@ -33,6 +33,7 @@ const ProductScreen = ({ history }) => {
   const [stock, setStock] = useState(0);
   const [category, setCategory] = useState(null);
   const [image, setImage] = useState("");
+  const [sortOrder, setSortOrder] = useState("alphabetical");
 
   const [errors, setErrors] = useState({});
 
@@ -65,10 +66,9 @@ const ProductScreen = ({ history }) => {
       setStock(0);
       setCategory(null);
       setImage(null);
-
       setModalIsOpen(false);
     }
-    dispatch(listProducts(keyword, pageNumber));
+    dispatch(listProducts(keyword, pageNumber, sortOrder));
   }, [dispatch, history, userInfo, pageNumber, keyword, createSuccess]);
 
   const handleSubmit = (e) => {
@@ -189,7 +189,6 @@ const ProductScreen = ({ history }) => {
   );
   const handleDelete = (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      // Dispatch the deleteProduct action
       dispatch(deleteProduct(productId));
     }
   };
@@ -249,6 +248,23 @@ const ProductScreen = ({ history }) => {
     </table>
   );
 
+  const handleSortChange = (event) => {
+    const selectedSortOrder = event.target.value;
+
+    // Toggle between "asc" and "desc" when the user changes the sorting option
+    if (selectedSortOrder === sortOrder) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortOrder(selectedSortOrder);
+    }
+
+    setPageNumber(1);
+  };
+
+  useEffect(() => {
+    dispatch(listProducts(keyword, pageNumber, sortOrder));
+  }, [dispatch, history, userInfo, pageNumber, keyword, sortOrder]);
+
   return (
     <>
       <HeaderContent name={"Products"} />
@@ -268,6 +284,9 @@ const ProductScreen = ({ history }) => {
                       keyword={keyword}
                       setKeyword={setKeyword}
                       setPage={setPageNumber}
+                      setSortOrder={setSortOrder}
+                      sortOrder={sortOrder}
+                      handleSortChange={handleSortChange}
                     />
                   </div>
                 </div>
