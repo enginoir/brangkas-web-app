@@ -79,7 +79,7 @@ const OrderViewScreen = ({ history, match }) => {
         <Modal
             style={modalStyles}
             isOpen={modal}
-            onRequestClose={() => setModal(true)}
+            onRequestClose={() => setModal(false)}
         >
             <h2 className="text-center">Order Payment</h2>
             <p className="text-center">Is the order already paid?</p>
@@ -104,11 +104,14 @@ const OrderViewScreen = ({ history, match }) => {
                 <button
                     onClick={handlePay}
                     className="btn btn-primary"
-                    disabled={!calculateChangeClicked} // Disable the button if calculateChangeClicked is false
+                    disabled={!calculateChangeClicked}
                 >
                     Yes, close order.
                 </button>
             </div>
+            <button onClick={() => setModal(false)} className="btn btn-danger float-right">
+                Close
+            </button>
         </Modal>
     );
 
