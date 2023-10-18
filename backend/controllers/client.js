@@ -6,13 +6,13 @@ const { Op } = require("sequelize");
 //@route    POST /api/clients
 //@access   Private/user
 exports.createClient = asyncHandler(async (req, res) => {
-    const { name, address, phone, email, dni } = req.body;
+    const { name, address, phone, email, memberid } = req.body;
     const createdClient = await Client.create({
         name,
         address,
         phone,
         email,
-        dni,
+        memberid,
     });
     res.status(201).json(createdClient);
 });
@@ -42,7 +42,7 @@ exports.getClients = asyncHandler(async (req, res) => {
                     { address: { [Op.like]: `%${keyword}%` } },
                     { phone: { [Op.like]: `%${keyword}%` } },
                     { email: { [Op.like]: `%${keyword}%` } },
-                    { dni: { [Op.like]: `%${keyword}%` } },
+                    { memberid: { [Op.like]: `%${keyword}%` } },
                 ],
             },
         };
@@ -72,7 +72,7 @@ exports.getClient = asyncHandler(async (req, res) => {
 //@route    PUT /api/clients/:id
 //@access   Private/user
 exports.updateClient = asyncHandler(async (req, res) => {
-    const { name, address, phone, email, dni } = req.body;
+    const { name, address, phone, email, memberid } = req.body;
 
     const client = await Client.findByPk(req.params.id);
 
@@ -81,7 +81,7 @@ exports.updateClient = asyncHandler(async (req, res) => {
         client.address = address;
         client.phone = phone;
         client.email = email;
-        client.dni = dni;
+        client.memberid = memberid;
         const updatedClient = await client.save();
         res.json(updatedClient);
     } else {

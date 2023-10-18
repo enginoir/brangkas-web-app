@@ -27,7 +27,7 @@ module.exports = {
         unique:true,
         allowNull: false
       },
-      dni: {
+      memberid: {
         type: Sequelize.STRING,
         unique:true,
         allowNull: false

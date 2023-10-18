@@ -30,6 +30,7 @@ const OrderViewScreen = ({ history, match }) => {
     const [modal, setModal] = useState(false);
     const [moneyReceived, setMoneyReceived] = useState(0);
     const [change, setChange] = useState(0);
+    const [calculateChangeClicked, setCalculateChangeClicked] = useState(false);
 
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
@@ -67,6 +68,7 @@ const OrderViewScreen = ({ history, match }) => {
         if (moneyReceived >= order.total) {
             const changeAmount = moneyReceived - order.total;
             setChange(changeAmount);
+            setCalculateChangeClicked(true);
             setModal(true);
         } else {
             alert("Insufficient money received. Please enter the correct amount.");
@@ -77,47 +79,49 @@ const OrderViewScreen = ({ history, match }) => {
         <Modal
             style={modalStyles}
             isOpen={modal}
-            onRequestClose={() => setModal(false)}
+            onRequestClose={() => setModal(true)}
         >
             <h2 className="text-center">Order Payment</h2>
-            <p className="text-center">Is order already paid?</p>
+            <p className="text-center">Is the order already paid?</p>
             <div>
                 <p>Total Amount: Rp {order.total}</p>
                 <div>
                     <p>
-                        Money Received:Rp {" "}
+                        Money Received: Rp{" "}
                         <input
-                        type="number"
-                        value={moneyReceived}
-                        onChange={(e) => setMoneyReceived(e.target.value)} />
+                            type="number"
+                            value={moneyReceived}
+                            onChange={(e) => setMoneyReceived(e.target.value)}
+                        />
                     </p>
                 </div>
-                    <p>Change: Rp {change}</p>
+                <p>Change: Rp {change}</p>
             </div>
-            <button onClick={handlePay} className="btn btn-primary">
-                Yes, close order.
-            </button>
-            {/* <form onSubmit={handlePay}>
-                <button type="submit" className="btn btn-primary">
+            <div className="d-flex justify-content-between">
+                <button onClick={handlePayment} className="btn btn-success">
+                    Calculate Change
+                </button>
+                <button
+                    onClick={handlePay}
+                    className="btn btn-primary"
+                    disabled={!calculateChangeClicked} // Disable the button if calculateChangeClicked is false
+                >
                     Yes, close order.
-                </button> */}
-
-                <ModalButton
-                    modal={modal}
-                    setModal={setModal}
-                    classes={"btn-danger float-right"}
-                />
-            {/* </form> */}
+                </button>
+            </div>
         </Modal>
     );
 
     const handlePay = async (e) => {
         e.preventDefault();
-        const updatedOrder = {
-            id: orderId,
-        };
-        setModal(false);
-        dispatch(updateOrderToPaid(updatedOrder));
+        const isConfirmed = window.confirm("Make sure the transaction is valid. Proceed to close the order?");
+            if(isConfirmed) {
+                const updatedOrder = {
+                    id: orderId,
+                };
+                setModal(false);
+                dispatch(updateOrderToPaid(updatedOrder));
+            }
     };
 
     const handleEdit = (e) => {
