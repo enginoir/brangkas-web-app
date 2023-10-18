@@ -5,17 +5,17 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 
 const LoginScreen = ({ history }) => {
-    const [email, setEmail] = useState("");
+    const [emailOrUsername, setEmailOrUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const dispatch = useDispatch();
 
-    //get user from state
+    // Get user from state
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo, error, loading } = userLogin;
 
     useEffect(() => {
-        //if user is logged
         if (userInfo) {
             history.push("/dashboard");
         }
@@ -23,7 +23,11 @@ const LoginScreen = ({ history }) => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(login(email, password));
+        dispatch(login(emailOrUsername, password));
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     return (
@@ -32,7 +36,6 @@ const LoginScreen = ({ history }) => {
             style={{ backgroundColor: "#cad5df" }}
         >
             <div className="login-box">
-                {/* /.login-logo */}
                 <div className="card">
                     <div className="card-header ">
                         <div className="login-logo">
@@ -55,11 +58,11 @@ const LoginScreen = ({ history }) => {
                         <form onSubmit={submitHandler}>
                             <div className="input-group mb-3">
                                 <input
-                                    type="email"
+                                    type="text"
                                     className="form-control"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Email or Username"
+                                    value={emailOrUsername}
+                                    onChange={(e) => setEmailOrUsername(e.target.value)}
                                 />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
@@ -69,17 +72,19 @@ const LoginScreen = ({ history }) => {
                             </div>
                             <div className="input-group mb-3">
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text":"password"}
                                     className="form-control"
                                     placeholder="Password"
                                     value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <div className="input-group-append">
                                     <div className="input-group-text">
-                                        <span className="fas fa-lock" />
+                                        <span
+                                        className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                                        onClick={togglePasswordVisibility}
+                                        style={{ cursor: "pointer" }}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -108,15 +113,13 @@ const LoginScreen = ({ history }) => {
                                     <i className="icon fas fa-info" /> Test
                                     Users
                                 </h5>
-                                <p>admin@example.com</p>
-                                <p>user@example.com</p>
+                                <p>admin@example.com or username: administrator</p>
+                                <p>user@example.com or username: user01</p>
                                 <hr />
                                 <p>pass: 123456</p>
                             </div>
                         </form>
-                        <div></div>
                     </div>
-                    {/* /.login-card-body */}
                 </div>
             </div>
         </div>
