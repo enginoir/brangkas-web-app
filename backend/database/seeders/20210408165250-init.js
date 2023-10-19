@@ -11,7 +11,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-     await queryInterface.bulkInsert('Categories', [
+    await queryInterface.bulkInsert('Categories', [
       {
         name: 'BEVERAGES'
       },
@@ -67,10 +67,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-     await queryInterface.bulkDelete('Categories',null, {})
+    await queryInterface.bulkDelete('Categories',null, {})
 
-     await queryInterface.bulkDelete('Tables',null, {})
+    await queryInterface.bulkDelete('Tables',null, {})
 
-     await queryInterface.bulkDelete('Clients',null, {})
+    await queryInterface.bulkDelete('Clients',null, {})
   }
 };
