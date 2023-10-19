@@ -28,12 +28,12 @@ module.exports = {
 
     await queryInterface.bulkInsert('Tables', [
       {
-        name: 'PATIO 1'
+        name: 'OUTDOOR 1'
       },
       {
-        name: 'PATIO 2'
+        name: 'OUTDOOR 2'
       },{
-        name: 'PATIO 3'
+        name: 'OUTDOOR 3'
       },{
         name: 'INTERIOR 1'
       },{
