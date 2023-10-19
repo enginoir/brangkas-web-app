@@ -32,7 +32,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword ? req.query.keyword : null;
-  const sortOrder = req.query.sortOrder || "";
+  const sortOrder = req.query.sortOrder;
 
   let options = {
     include: [{ model: Category, as: "category" }],
@@ -61,12 +61,14 @@ exports.getProducts = asyncHandler(async (req, res) => {
 
   if (sortOrder === "alphabetical") {
     options.order = [["name", "ASC"]];
-  } else if (sortOrder === "alphabeticalDesc") {
-    options.order = [["name", "DESC"]];
   } else if (sortOrder === "price") {
     options.order = [["price", "ASC"]];
-  } else if (sortOrder === "priceDesc") {
+  }
+
+  if (sortOrder === "priceDesc") {
     options.order = [["price", "DESC"]];
+  } else if (sortOrder === "alphabeticalDesc") {
+    options.order = [["name", "DESC"]];
   }
 
   const count = await Product.count({ ...options });

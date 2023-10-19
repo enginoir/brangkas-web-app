@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Search = ({ keyword, setKeyword, setPage, setSortOrder, sortOrder }) => {
+const Search = ({ keyword, setKeyword, setPage }) => {
   const [searchTerm, setSearchTerm] = useState(keyword);
 
   const handleKeyPress = (event) => {
@@ -10,11 +10,6 @@ const Search = ({ keyword, setKeyword, setPage, setSortOrder, sortOrder }) => {
   };
   const handleClickButton = () => {
     setKeyword(searchTerm);
-    setPage(1);
-  };
-  const handleSortChange = (event) => {
-    const selectedSortOrder = event.target.value;
-    setSortOrder(selectedSortOrder);
     setPage(1);
   };
 
@@ -29,17 +24,7 @@ const Search = ({ keyword, setKeyword, setPage, setSortOrder, sortOrder }) => {
         placeholder="Search"
         onKeyPress={handleKeyPress}
       />
-      <select
-        onChange={handleSortChange}
-        className="form-control"
-        style={{ width: "auto" }}
-        value={sortOrder}
-      >
-        <option value="alphabetical">Sort by Alphabetical(ASC)</option>
-        <option value="alphabeticalDesc">Sort by Alphabetical(DESC)</option>
-        <option value="price">Sort by Price (ASC)</option>
-        <option value="priceDesc">Sort by Price (DESC)</option>
-      </select>
+
       <div className="input-group-append">
         <button
           onClick={handleClickButton}
