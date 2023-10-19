@@ -25,6 +25,7 @@ const UserScreen = ({ history }) => {
     const [pageNumber, setPageNumber] = useState(1);
 
     const [name, setName] = useState("");
+    const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
@@ -51,6 +52,7 @@ const UserScreen = ({ history }) => {
         }
         if (createSuccess) {
             setName("");
+            setUserName("");
             setPassword("");
             setEmail("");
             setIsAdmin(false);
@@ -65,6 +67,9 @@ const UserScreen = ({ history }) => {
         let errorsCheck = {};
         if (!name) {
             errorsCheck.name = "Name is required";
+        }
+        if (!username) {
+            errorsCheck.username = "Username is required";
         }
         if (!password) {
             errorsCheck.password = "Password is required";
@@ -83,6 +88,7 @@ const UserScreen = ({ history }) => {
         if (Object.keys(errorsCheck).length === 0) {
             const user = {
                 name: name,
+                username: username,
                 email: email,
                 password: password,
                 isAdmin: isAdmin,
@@ -98,6 +104,7 @@ const UserScreen = ({ history }) => {
                 <tr>
                     <th className="d-none d-sm-table-cell">ID</th>
                     <th>Name</th>
+                    <th>User Name</th>
                     <th>Email</th>
                     <th className="d-none d-sm-table-cell">Photo</th>
                     <th className="d-none d-sm-table-cell">Admin</th>
@@ -110,6 +117,7 @@ const UserScreen = ({ history }) => {
                     <tr key={user.id}>
                         <td className="d-none d-sm-table-cell">{user.id}</td>
                         <td>{user.name}</td>
+                        <td>{user.username}</td>
                         <td>{user.email}</td>
                         <td className="d-none d-sm-table-cell">
                             <img
@@ -177,6 +185,13 @@ const UserScreen = ({ history }) => {
                         type={"text"}
                         data={name}
                         setData={setName}
+                        errors={errors}
+                    />
+                    <Input
+                        name={"username"}
+                        type={"text"}
+                        data={username}
+                        setData={setUserName}
                         errors={errors}
                     />
                     <Input

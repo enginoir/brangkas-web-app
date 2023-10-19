@@ -8,7 +8,7 @@ const { Op } = require("sequelize");
 //@route    POST /api/users
 //@access   Private/admin
 exports.registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password, isAdmin } = req.body;
+    const { name, username, email, password, isAdmin } = req.body;
 
     //check if email is already in use
     const userExists = await User.findOne({ where: { email } });
@@ -20,6 +20,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
     //create User
     const user = await User.scope("withPassword").create({
         name,
+        username,
         email,
         password,
         isAdmin,
@@ -29,6 +30,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
         res.status(201).json({
             _id: user._id,
             name: user.name,
+            username: user.username,
             email: user.email,
             isAdmin: user.isAdmin,
             image: user.image,
@@ -53,6 +55,7 @@ exports.login = asyncHandler(async (req, res) => {
         res.json({
             _id: user.id,
             name: user.name,
+            username: user.username,
             email: user.email,
             isAdmin: user.isAdmin,
             image: user.image,
@@ -103,6 +106,7 @@ exports.getUsers = asyncHandler(async (req, res) => {
                 [Op.or]: [
                     { id: { [Op.like]: `%${keyword}%` } },
                     { name: { [Op.like]: `%${keyword}%` } },
+                    { username: { [Op.like]: `%${keyword}%` } },
                     { email: { [Op.like]: `%${keyword}%` } },
                 ],
             },
@@ -119,7 +123,7 @@ exports.getUsers = asyncHandler(async (req, res) => {
 //@route    PUT /api/users/:id
 //@access   Private/admin
 exports.updateUser = asyncHandler(async (req, res) => {
-    const { name, email, password, isAdmin, avatar } = req.body;
+    const { name, username, email, password, isAdmin, avatar } = req.body;
 
     const user = await User.findByPk(req.params.id);
 
@@ -127,6 +131,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
 
     if (user) {
         user.name = name;
+        user.username = username;
         user.image = avatar ? "/avatar.png" : user.image;
         user.email = email;
         user.password = password
@@ -149,7 +154,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
 //@route    PUT /api/users/:id
 //@access   Private/admin
 exports.updateProfile = asyncHandler(async (req, res) => {
-    const { id, name, email, password, passwordCheck, image } = req.body;
+    const { id, name, username, email, password, passwordCheck, image } = req.body;
 
     const user = await User.scope("withPassword").findByPk(req.params.id);
 
@@ -157,6 +162,7 @@ exports.updateProfile = asyncHandler(async (req, res) => {
 
     if (user && (await user.validPassword(passwordCheck))) {
         user.name = name;
+        user.username = username;
         user.email = email;
         user.image = image ? image : user.image;
         user.password = password

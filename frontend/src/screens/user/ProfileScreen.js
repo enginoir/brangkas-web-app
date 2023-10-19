@@ -32,6 +32,7 @@ const ProfileScreen = ({ history }) => {
     const dispatch = useDispatch();
 
     const [name, setName] = useState("");
+    const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -75,6 +76,7 @@ const ProfileScreen = ({ history }) => {
         } else {
             //set states
             setName(user.name);
+            setUserName(user.username);
             setEmail(user.email);
             setImage(user.image);
         }
@@ -87,6 +89,10 @@ const ProfileScreen = ({ history }) => {
 
         if (!name) {
             errorsCheck.name = "Name is required.";
+        }
+
+        if (!username) {
+            errorsCheck.username = "Username is required.";
         }
 
         if (password.length > 0 && password.length < 6) {
@@ -142,6 +148,7 @@ const ProfileScreen = ({ history }) => {
                 updateProfile({
                     id: userInfo._id,
                     name,
+                    username,
                     email,
                     password,
                     image,
@@ -224,6 +231,13 @@ const ProfileScreen = ({ history }) => {
                 type={"text"}
                 data={name}
                 setData={setName}
+                errors={errors}
+            />
+            <Input
+                name={"username"}
+                type={"text"}
+                data={username}
+                setData={setUserName}
                 errors={errors}
             />
             <Input

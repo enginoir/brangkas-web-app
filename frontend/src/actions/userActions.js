@@ -23,7 +23,7 @@ import {
 } from "./../constants/userConstants";
 
 //login
-export const login = (email, password) => async (dispatch) => {
+export const login = (emailOrUsername, password) => async (dispatch) => {
     try {
         dispatch({
             type: USER_LOGIN_REQUEST,
@@ -39,7 +39,7 @@ export const login = (email, password) => async (dispatch) => {
         //get login data
         const { data } = await axios.post(
             "/api/users/login",
-            { email, password },
+            { emailOrUsername, password },
             config
         );
         dispatch({
@@ -111,7 +111,7 @@ export const listUsers =
 
 //register an user
 export const register = (user) => async (dispatch, getState) => {
-    const { name, email, password, isAdmin } = user;
+    const { name, username, email, password, isAdmin } = user;
 
     try {
         dispatch({
@@ -134,7 +134,7 @@ export const register = (user) => async (dispatch, getState) => {
         //get login data
         const { data } = await axios.post(
             "/api/users",
-            { name, email, password, isAdmin },
+            { name, username, email, password, isAdmin },
             config
         );
         dispatch({

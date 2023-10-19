@@ -22,6 +22,7 @@ const UserEditScreen = ({ history, match }) => {
     const userId = parseInt(match.params.id);
 
     const [name, setName] = useState("");
+    const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
@@ -68,6 +69,7 @@ const UserEditScreen = ({ history, match }) => {
         } else {
             //set states s
             setName(user.name);
+            setUserName(user.username);
             setEmail(user.email);
             setIsAdmin(user.isAdmin);
         }
@@ -79,6 +81,9 @@ const UserEditScreen = ({ history, match }) => {
         let errorsCheck = {};
         if (!name) {
             errorsCheck.name = "Name is required.";
+        }
+        if (!username) {
+            errorsCheck.username = "Username is required.";
         }
         if (password > 1 && password < 6) {
             errorsCheck.password = "Password must be at least 6 characters long.";
@@ -99,6 +104,7 @@ const UserEditScreen = ({ history, match }) => {
                 updateUser({
                     id: userId,
                     name,
+                    username,
                     email,
                     password,
                     avatar,
@@ -123,6 +129,13 @@ const UserEditScreen = ({ history, match }) => {
                 type={"text"}
                 data={name}
                 setData={setName}
+                errors={errors}
+            />
+            <Input
+                name={"username"}
+                type={"text"}
+                data={username}
+                setData={setUserName}
                 errors={errors}
             />
             <Input

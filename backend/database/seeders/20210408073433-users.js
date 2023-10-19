@@ -14,16 +14,18 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    
+
     await queryInterface.bulkInsert('Users', [
       {
         name: 'Admin',
+        username: 'administrator',
         email: 'admin@example.com',
         password: bcrypt.hashSync('123456', salt),
         isAdmin: true
       },
       {
         name: 'User',
+        username: 'user01',
         email: 'user@example.com',
         isAdmin: false,
         password: bcrypt.hashSync('123456', salt)
