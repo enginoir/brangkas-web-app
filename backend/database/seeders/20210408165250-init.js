@@ -38,8 +38,6 @@ module.exports = {
         name: 'INTERIOR 1'
       },{
         name: 'INTERIOR 2'
-      },{
-        name: 'INTERIOR 3'
       }
     ])
 
