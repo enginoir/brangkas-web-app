@@ -33,7 +33,7 @@ const ProductScreen = ({ history }) => {
   const [stock, setStock] = useState(0);
   const [category, setCategory] = useState(null);
   const [image, setImage] = useState("");
-  const [sortOrder, setSortOrder] = useState("alphabetical");
+  const [sortOrder, setSortOrder] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -250,15 +250,10 @@ const ProductScreen = ({ history }) => {
 
   const handleSortChange = (event) => {
     const selectedSortOrder = event.target.value;
-
-    // Toggle between "asc" and "desc" when the user changes the sorting option
-    if (selectedSortOrder === sortOrder) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortOrder(selectedSortOrder);
-    }
-
+    setSortOrder(selectedSortOrder);
     setPageNumber(1);
+
+    dispatch(listProducts(keyword, 1, selectedSortOrder));
   };
 
   useEffect(() => {
@@ -280,14 +275,32 @@ const ProductScreen = ({ history }) => {
                 <div className="card-header">
                   <h3 className="card-title">Products table</h3>
                   <div className="card-tools">
-                    <Search
-                      keyword={keyword}
-                      setKeyword={setKeyword}
-                      setPage={setPageNumber}
-                      setSortOrder={setSortOrder}
-                      sortOrder={sortOrder}
-                      handleSortChange={handleSortChange}
-                    />
+                    <div>
+                      <Search
+                        keyword={keyword}
+                        setKeyword={setKeyword}
+                        setPage={setPageNumber}
+                        setSortOrder={setSortOrder}
+                        sortOrder={sortOrder}
+                        handleSortChange={handleSortChange}
+                      />
+
+                      <select
+                        onChange={handleSortChange}
+                        className="form-control"
+                        style={{ width: "auto" }}
+                        value={sortOrder}
+                      >
+                        <option value="alphabetical">
+                          Sort by Alphabetical(ASC)
+                        </option>
+                        <option value="alphabeticalDesc">
+                          Sort by Alphabetical(DESC)
+                        </option>
+                        <option value="price">Sort by Price (ASC)</option>
+                        <option value="priceDesc">Sort by Price (DESC)</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
                 {/* /.card-header */}
